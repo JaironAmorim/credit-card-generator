@@ -25,9 +25,9 @@ public class CreditCardGeneratorController {
     }
 
     @GetMapping("/validate")
-    public ResponseEntity<Boolean> validateCard(@RequestParam(value = "numbeOfCard") String numbeOfCard){
+    public ResponseEntity<Boolean> validateCard(@RequestParam(value = "numberOfCard") String numberOfCard){
 
-        Boolean isvalid = creditCardGenarateService.isValidCreditCardNumber(numbeOfCard);
+        Boolean isvalid = creditCardGenarateService.isValidCreditCardNumber(numberOfCard);
 
         return ResponseEntity.ok().body(isvalid);
 
