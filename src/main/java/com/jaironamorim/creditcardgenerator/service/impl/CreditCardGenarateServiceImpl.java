@@ -3,13 +3,18 @@ package com.jaironamorim.creditcardgenerator.service.impl;
 import com.jaironamorim.creditcardgenerator.model.dto.CreditCardDto;
 import com.jaironamorim.creditcardgenerator.model.enums.LabelEnum;
 import com.jaironamorim.creditcardgenerator.service.CreditCardGenarateService;
+import com.jaironamorim.creditcardgenerator.util.DateUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 @Service
@@ -33,10 +38,16 @@ public class CreditCardGenarateServiceImpl implements CreditCardGenarateService 
 
         }
 
+        String expires = DateUtil.randonGenerateDate(LocalDate.now(), LocalDate.of(2030, 12, 30))
+                .format(DateTimeFormatter.ofPattern("MM/yyyy"));
+
+        Random random = new Random();
+        String cvv = String.valueOf(random.nextInt(1000, 10000)).substring(0, 3);
+
         return  CreditCardDto.builder()
                 .number(number)
-                .cvv("321")
-                .expires("05/28")
+                .cvv(cvv)
+                .expires(expires)
                 .flag(labelEnum.getLabel())
                 .owner("Jane Doe")
                 .isValid(isValidCreditCardNumber(number))
